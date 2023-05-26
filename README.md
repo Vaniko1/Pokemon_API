@@ -1,5 +1,4 @@
 # Pokemon_API
-Quiz-3 Working with API / Database
 * In this project I used pokeAPI for the information about pokemons and their abilities, created a table in python and saved data there.
 
 
