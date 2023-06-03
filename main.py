@@ -4,17 +4,22 @@ import sqlite3
 import win10toast
 from datetime import datetime
 
+
 pokemon = input('Enter Pokemon you love the most: ')
 url = f'https://pokeapi.co/api/v2/pokemon/{pokemon}'
 r = requests.get(url)
 
-result_json = r.text
-res = json.loads(result_json)
-res_structured = json.dumps(res, indent=5)
+result = r.json()
+res = json.loads(r.text)
+res_structured = json.dumps(result, indent=5)
 # print(res_structured)
 # print(r.text)
 # print(r.status_code)
 # print(r.headers)
+
+with open('pokemon.json', 'w') as file:
+    json.dump(result, file, indent=4)
+
 for pokemon_ability in res['abilities']:
     pokemon_ability_name = pokemon_ability['ability']['name']
     print(pokemon_ability_name)
@@ -32,19 +37,18 @@ conn.commit()
 
 conn.close()
 
-def anime_quote():
-    toast = win10toast.ToastNotifier()
-    url = "https://animechan.vercel.app/api/random"
-    response = requests.get(url)
-    res_json = response.text
-    respo = json.loads(res_json)
-    result = response.json()
-    res = json.dumps(result, indent=5)
-    current_date = str(datetime.now().date())
-
-    toast.show_toast(title=f"Today's quoute is: {respo['quote']}", msg=f"anime: {respo['anime']}, character: {respo['character']}", duration=10)
-    print(current_date, respo['quote'])
-
-anime_quote()
-
+# def anime_quote():
+#     toast = win10toast.ToastNotifier()
+#     url = "https://animechan.vercel.app/api/random"
+#     response = requests.get(url)
+#     res_json = response.text
+#     respo = json.loads(res_json)
+#     result = response.json()
+#     res = json.dumps(result, indent=5)
+#     current_date = str(datetime.now().date())
+#
+#     toast.show_toast(title=f"Today's quoute is: {respo['quote']}", msg=f"anime: {respo['anime']}, character: {respo['character']}", duration=10)
+#     print(current_date, respo['quote'])
+#
+# anime_quote()
 
